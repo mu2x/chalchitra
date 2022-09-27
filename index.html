@@ -3,38 +3,26 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
-    <!-- <script src="https://www.youtube.com/iframe_api"></script> -->
-
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/ui/4.3.0/firebase-ui-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-analytics.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
   <script src="https://cdn.ckeditor.com/4.16.2/full-all/ckeditor.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-  <!--
-  <script src="https://cdn.ckeditor.com/4.16.1/standard-all/ckeditor.js"></script>
-  <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-  <script id=ck5 src="https://utep.zrenix.com/~nalandi/ckeditor/ckeditor5-inline/build/ckeditor.js"></script>
-    <link rel="stylesheet" href="../CSS/css.css">
-  -->
-
-
+  
   <link rel="stylesheet" href="index.css" />
 
 
   <script src="functions.js"></script>
   <script type="text/javascript">
     var editors=[], qdata={}, nchoice=0, realtime, ckeditor='ckeditor4';
-    LoadJSs(["Login.js", "myconfig.js", "IO.js", "UserManagement.js","Q.js", "A.js"]); //Load our style and JS files
+    LoadJSs(["Login.js", "myconfig.js", "index.js"]); //Load our style and JS files
     firebase.initializeApp(firebaseConfig); 
     var  debug=0, role='student', admin=0, db = firebase.firestore(), A = new Assessment({}), I=new Info(); 
     window.addEventListener('load', function() { 
       initApp({}); 
     });
-    //MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
   </script>
 
 </head>
@@ -43,22 +31,11 @@
   <div class="navbar">
     <span  id=Top11 >COURSES</span>     
     <span id=Top12></span>     <span id=Top13></span>     <span id=Top14></span> 
-    <span id=Top15></span> <span id=Top16></span> <a href=/TheTreeClass/E.html>Activites</a>
     <a style='float:right;' href="#"> <span id=Login data-logged=0>Login</span>   </a>
-
   </div>
   <p id=Top21></p>
   <hr/>
-  <div id=Layer3 style="display: none;"> 
-    <div id=player></div><div id=Questions></div> 
-    <input id=VideoID value=cpaigEYuNEw />
-    <input size=1 id=StartTime value=5 />
-    <input size=1 id=EndTime value=20 />
-
-    <button onclick="player.loadVideoById({ videoId: $('#VideoID').val(), startSeconds: $('#StartTime').val(), endSeconds: $('#EndTime').val() });">Start</button>
-     
-  </div>
-
+  
   <span id=Middle1>    
     <span id=Middle11></span>   
     <span id=Middle12></span>   
@@ -81,164 +58,8 @@
     </div>
     <div id=Screen1M1 class=M1></div>
   </div>
-    <script>
 
-  function Grade(O) {
-    var g = {
-       row0:{0:{n:'2021-01-01'},1:{}},
-      'vkumar1@utep.edu':{0:1}
-    }; 
-    //db.doc(O.col+'/Grade').set(g); 
-    var docid=O.col+'/Grade', sdocid='/users/'+email+docid; 
-    db.doc(docid).onSnapshot(function(doc) {
-      GradeDisplay({d:doc.data(), oid:O.oid, id:O.col+'/Grade', flag:admin, msg:'Score assigned by the instructor'}); 
-      console.log(doc.data().row0, sdocid);
-      var initdata = {row0:doc.data().row0}; initdata[escape_email(email)]={total:0}; 
-      db.doc(sdocid).set(initdata, {merge:true}); 
-    });
-    db.doc(sdocid).onSnapshot(function(doc) {
-      GradeDisplay({d:doc.data(), oid:'Middle2', id:sdocid, flag:1, msg:'<hr/>Score assigned by '+email}); 
-    });
-    //console.log(O);
-
-  }
-  function updateByKeyB(id,k,v,flag) { var uqid=uniqid();
-    return `<span id=${uqid} class=InstScore ondblclick=" if(!${flag}) return; 
-       if($(this).attr('contenteditable') == 'true') {
-        $(this).attr('contenteditable',false);
-        db.doc('${id}').update({${k}:$(this).text()});
-        console.log({${k}:$(this).text()});
-       } else $(this).attr('contenteditable',true);
-      ">${v}</span> `; 
-  }
-  function replaceSScore(eid,id,iq, row0) {
-    db.doc('/users/'+eid.replace(/&46/g, '.')+id).get().then((doc)=>{
-        if(!doc.exists) { $(`#eid${iq}`).css('background-color', 'yellow'); return;}
-        var sdata=doc.data()[eid]; 
-        //console.log(eid,sdata);
-        for (var i in row0) { var n = sdata[i]?sdata[i].n:'';
-         $(`#SScore-${iq}-${i}`).text(n);
-        }
-      })
-  }
-  function GetStudentScore(id) {  iq=0; 
-    db.doc(id).get().then((doc0)=>{ for (var eid in doc0.data()) { iq++;  replaceSScore(eid,id,iq,doc0.data().row0);   }    })  
-  }
-  function GradeDisplay(O) {var g=O.d, oid=O.oid, id=O.id, msg=O.msg?O.msg:'';
-    var iq=0; s='',sh='<th>row0</th>'; st=''; 
-    for (var i in g['row0']) { var n=g['row0'][i].n?g['row0'][i].n:i; 
-      sh += '<th>'+updateByKeyB(id,`'row0.${i}.n'`, n, admin)+'</th>'; 
-    }
-    if(admin) sh += `<th><button onclick="db.doc('${id}').update({'row0.${iq}.n':${iq}});">Add</button></th>`; 
-    
-    for (var eid in g) { iq++; if(eid=='row0') continue; 
-      if(!admin && eid != escape_email(email)) continue;
-
-      var eid2=eid.replace(/\./g, '&46'), stt=`<td id=eid${iq}>`+eid2.replace(/&46/g, '.')+'</td>';
-      
-      for (var i in g['row0']) { var n=g[eid][i]?g[eid][i].n:0;
-        var sscore = `<span id=SScore-${iq}-${i} class=SScore></span>`;
-        stt += '<td>'+updateByKeyB(id,`'${eid2}.${i}.n'`, n, O.flag)+sscore+'</td>'; 
-      }
-      st += `<tr>${stt}</tr>`;
-    }
-    s = `<table align=center border=1><tr>${sh}</tr>${st}</table>`;
-    if(admin) s += `<input id=adduser />
-          <button onclick="
-            var obj={}; obj[escape_email($('#adduser').val())]={0:{n:0}}; 
-            db.doc('${id}').update(obj);
-          ">+</button>
-          <button onclick=" $('.InstScore').toggle(); ">Inst</button>
-          <button onclick=" $('.SScore').toggle(); ">Student</button>
-          <button onclick=" GetStudentScore('${id}');  ">Load SScore</button>
-          `; 
-
-    $('#'+oid).html('<center>'+msg + s +'</center>');
-    //console.log(O);
-  }
-  function SelectedA(d) { var ccol=d.id+'/Concepts', sem=d.id+'/Fall2021', acol=d.id+'/A', cid=d.id; 
-    db.doc('/users/'+email).update({'LastVisited.0':{id:d.id, name:d.name}}); 
-    var sa = `<a href=# class=topmenu data-col=${acol} data-oid=Middle2 data-color=blue onclick="
-                A.Setup(\$(this).data()); ToggleColor($(this)); db.doc('/users/'+email).update({'LastVisited.1':{id:'${acol}', textid:'Top13'}});
-                ">Assessment</a>`; 
-    var sc = `<a href=# class=topmenu data-col=${ccol} data-oid=Middle2 data-color=blue onclick="
-             A.Setup(\$(this).data()); ToggleColor($(this)); db.doc('/users/'+email).update({'LastVisited.1':{id:'${ccol}', textid:'Top12'}});
-            ">Concepts</a>`; 
-    var Grade = `<a href=# class=topmenu onclick="
-             Grade({col:'${sem}',uhome:'/users/${email}', oid:'Middle1'}); 
-            ">Grade</a>`; 
-    $('#Top12').html(sc);  
-    $('#Top13').html(sa); 
-    $('#Top16').html(Grade); 
-
-    if(role != 'instructor') return;
-    
-    var s4 = `<a href=# class=topmenu onclick="    \$('#Top21').load('Info.html');  ">Load</a>`; 
-    $('#Top14').html(s4); 
-    
-    var CourseID = d.id?d.id:'/COURSES/EA2';
-    db.doc(CourseID).onSnapshot(function(doc) {  $('#Top15').html(I.dropdownOneRow({d:doc.data(), id:CourseID}));   });
-
-    if(debug) console.log(s);
-  }
-  db.doc('/COURSES/COURSES').onSnapshot(function(doc) {      
-    $('#Top11').html(dropdown({d:doc.data()}));  
-  });
-
- 
-
-  setTimeout(function() {
-    db.doc('/users/'+email).get().then(doc=>{ var d=doc.data();
-      var a1=d.LastVisited[0], a2=d.LastVisited[1]; 
-      SelectedA(a1);       $('#dropbtn1').html(a1.name); colhome=a1.id; 
-      var textid = a2.textid?a2.textid:'Top12'; 
-      A.Setup({col:a2.id, oid:'Middle2'});  $(`#${textid} a`).css("background-color", "blue"); 
-      if(debug) console.log(d); 
-
-    })
-     
-        }, 1000);
-
-  function InitialUinfo() {
-     var s='';
-      s += ` <button onclick="ListByCol($('#ListByCol').val(),'Middle2'); ">List</button> <input id=ListByCol value='/public'/> `;
-      s += ` <button onclick="EditRawByID($('#EditRawByID').val(),'Middle2'); ">Edit</button> <input id=EditRawByID value='/public/test'/>`;
-      s += ' | <input type=checkbox onclick="debug=$(this).prop(\'checked\')?1:0; ">debug</input>'; 
-      var Roster=[email, 'instructor']
-      s += RoleChooser(Roster);
-      s += ` | <input type=checkbox onclick="Lang=$(this).prop('checked')?'Hindi':'EN'; ">Lang:H</input>`; 
-
-    return `<span style='display:none;' role=${role} class=more>${s}</span>`; 
-  }
   
-  function dropdown(O) { var s='', mainid=O.mainid?O.mainid:'dropbtn1'; 
-   s += `<button class=CrossBig>&times;</button>`;
-   for (var kkk in O.d) { var sss=''; 
-    for (var kk in O.d[kkk]) { var ss=''; 
-      for (var k in O.d[kkk][kk]) { var id=O.d[kkk][kk][k]['col'], n=O.d[kkk][kk][k]['name']?O.d[kkk][kk][k]['name']:k; //console.log(col);
-        ss += `<a href="#" data-id=${id} data-name='${n}' onclick=" 
-          SelectedA(\$(this).data()); colhome='${id}'; \$('#${mainid}').html('${k}');
-          $('#Middle11').html('');        $('#Middle12').html('');  $('#Middle13').html(''); 
-          ">${n}</a>`; 
-      }
-      sss += `<div class="column"><b>${kk}</b> ${ss}  </div> `;
-    }
-    s += `<h3>${kkk}</h3><div class="row"> ${sss} </div>`;
-  }
-
-    var ss =`
-    <div class="dropdown" onclick=" $('#dropdown-courses-content').toggle();">
-      <button id=dropbtn1 class="dropbtn">COURSES</button>
-      <div id=dropdown-courses-content class="dropdown-content" >  ${s}   </div>
-    </div>
-    `;
-    //console.log(ss);
-    return ss;  
-  
-
-  }
-  
-    </script>
 
 
 
