@@ -49,9 +49,9 @@
         } 
             //var uid = user.uid, phoneNumber = user.phoneNumber, providerData = user.providerData;
         var ss =`
-          <div class="dropdown" onclick=" $('#LogoutButton').toggle();">
-              <button id=dropbtn1 onmouseover=" $('#LogoutButton').show();" onmouseout=" $('#LogoutButton').hide();"  class="dropbtn">${n}</button>
-              <div id=LogoutButton class="dropdown-content" >  
+          <div class="dropdown" onclick=" $('#LogoutButton').toggle();" onmouseover=" $('#LogoutButton').show();" onmouseout=" $('#LogoutButton').hide();">
+              <button id=dropbtn1   class="dropbtn">${n}</button>
+              <div id=LogoutButton style='display:none;' class="dropdown-content" >  
                 <div class="row"> <div class="column">
                   <a href=#  onclick="SignOut({});">Logout</a>        
                 </div>  </div>
