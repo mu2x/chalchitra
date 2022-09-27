@@ -2,7 +2,7 @@
 
 //-----------------------------
 var ckbasic = [{items:['Source','Bold','Italic','Underline','Strike','Subscript','Superscript', 
-                    'ckeditor_wiris_formulaEditor','ckeditor_wiris_formulaEditorChemistry', 'Mathjax']}];
+                    'ckeditor_wiris_formulaEditor','ckeditor_wiris_formulaEditorChemistry']}];
 var ckfull = [
     { name: 'document', items: [ 'Source', '-', 'Save', 'NewPage', 'ExportPdf', 'Preview', 'Print', '-', 'Templates' ] },
     { name: 'clipboard', items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
@@ -17,7 +17,7 @@ var ckfull = [
     { name: 'styles', items: [ 'Styles', 'Format', 'Font', 'FontSize' ] },
     { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
     { name: 'tools', items: [ 'Maximize', 'ShowBlocks' ] },
-    { name: 'wiris', items : [ 'ckeditor_wiris_formulaEditor','ckeditor_wiris_formulaEditorChemistry', 'Mathjax']}
+    { name: 'wiris', items : [ 'ckeditor_wiris_formulaEditor','ckeditor_wiris_formulaEditorChemistry']}
 ];
 var tb=ckbasic;
 var ckconfig = {startupMode:'source'};
@@ -30,8 +30,8 @@ CKEDITOR.disableAutoInline = true;
 
 CKEDITOR.config.extraPlugins = 'ckeditor_wiris,mathjax';
 
-CKEDITOR.config.mathJaxLib='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_HTML';
-MathJax.Hub.Config({    tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']], processEscapes: true    }  });
+//CKEDITOR.config.mathJaxLib='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_HTML';
+//MathJax.Hub.Config({    tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']], processEscapes: true    }  });
 
 var role='student', inst=0, student=1, priv={}, debug=0, admin=0, group='default', uhome='/users', permission='------rwx', groups=[], roles=[], colhome='/public', Lang='EN'; 
 //-----------------------------
