@@ -39,19 +39,40 @@
 }
 .nav  a:hover:not(.active) {   background-color: #111; }
 .active {   background-color: #04AA6D; }
+  
+ .NavButtons {
+  background-color: white; 
+  border: none;  color: black;
+  padding: 15px 32px;   text-align: center;
+  text-decoration: none;   display: inline-block;
+  font-size: 16px;   margin: 4px 2px;   cursor: pointer;
+  border: 2px solid #e7e7e7;
+}
+
+[NavButtonSelected="1"] {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #4CAF50;
+}
+  
 </style>
     
 </head>
 
 <body>
-  
+  <div>
+     <button NavButtonSelected=1 class="NavButton">Green</button>
+     <button class="NavButton">Green</button>
+     <span class=NavButton  style="float:right"><a href="#login" id=Login data-logged=0>Login</a></span>
+  </div>
+ <!--
  <ul class=navMain>
   <li id=Top11 class=nav><a class="active" href="#home">&#8801;</a></li>
   <li id=Top12 class=nav><a href="#Scenes">Scenes</a></li>
   <li id=Top13 class=nav><a href="#Finaces">Finances</a></li>
   <li class=nav class=nav style="float:right"><a href="#login" id=Login data-logged=0>Login</a></li>
 </ul>
-  
+ -->
  
   <hr/>
   
