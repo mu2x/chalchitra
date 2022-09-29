@@ -1,4 +1,5 @@
-
+ var editors=[], qdata={}, nchoice=0, realtime, ckeditor='ckeditor4';
+ var  debug=0, role='student', admin=0, db = firebase.firestore(); 
 
 //-----------------------------
 var ckbasic = [{items:['Source','Bold','Italic','Underline','Strike','Subscript','Superscript', 
