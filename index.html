@@ -15,10 +15,9 @@
   <script src="functions.js"></script>
   <script src="config.js"></script>
   <script type="text/javascript">
-   
+    firebase.initializeApp(firebaseConfig); 
     LoadJSs(["Login.js",  "index.js"]); 
     window.addEventListener('load', function() {    
-      firebase.initializeApp(firebaseConfig); 
       initApp({});     
     });
   </script>
