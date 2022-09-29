@@ -15,15 +15,14 @@
   
   <link rel="stylesheet" href="index.css" />
   <script src="functions.js"></script>
+  <script src="config.js"></script>
   <script type="text/javascript">
     LoadJSs(["https://www.gstatic.com/firebasejs/ui/4.3.0/firebase-ui-auth.js", "https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js", 
              "https://www.gstatic.com/firebasejs/7.6.1/firebase-analytics.js",  "https://www.gstatic.com/firebasejs/7.6.1/firebase-auth.js", 
              "https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js", "https://cdn.ckeditor.com/4.16.2/full-all/ckeditor.js" 
             ]); 
-    LoadJSs(["Login.js", "config.js", "index.js"]); 
+    LoadJSs(["Login.js",  "index.js"]); 
     firebase.initializeApp(firebaseConfig); 
-    var editors=[], qdata={}, nchoice=0, realtime, ckeditor='ckeditor4';
-    var  debug=0, role='student', admin=0, db = firebase.firestore(); 
     window.addEventListener('load', function() {     initApp({});     });
   </script>
     
