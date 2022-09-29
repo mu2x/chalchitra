@@ -22,8 +22,10 @@
              "https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js", "https://cdn.ckeditor.com/4.16.2/full-all/ckeditor.js" 
             ]); 
     LoadJSs(["Login.js",  "index.js"]); 
-    firebase.initializeApp(firebaseConfig); 
-    window.addEventListener('load', function() {     initApp({});     });
+    window.addEventListener('load', function() {    
+      firebase.initializeApp(firebaseConfig); 
+      initApp({});     
+    });
   </script>
     
     
